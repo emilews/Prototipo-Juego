@@ -30,6 +30,8 @@ public class ventana extends javax.swing.JFrame {
         Comenzar = new javax.swing.JToggleButton();
         Puntaje = new javax.swing.JLabel();
         Salida = new javax.swing.JLabel();
+        Dificultades = new javax.swing.JComboBox<>();
+        EtiquetaDificultad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(20, 20));
@@ -68,6 +70,15 @@ public class ventana extends javax.swing.JFrame {
         Salida.setFont(new java.awt.Font("Tw Cen MT", 0, 24)); // NOI18N
         Salida.setText("             ");
 
+        Dificultades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facil", "Media", "Dificil" }));
+        Dificultades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DificultadesActionPerformed(evt);
+            }
+        });
+
+        EtiquetaDificultad.setText("Dificultad:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,7 +108,11 @@ public class ventana extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Dificultades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EtiquetaDificultad))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
         );
@@ -107,7 +122,12 @@ public class ventana extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(Comenzar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Salida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(EtiquetaDificultad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Dificultades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -146,24 +166,67 @@ public class ventana extends javax.swing.JFrame {
           datos.respuestaInt = Integer.parseInt(datos.respuestaStr);
             
                   resultado= num1*num2;
-       //Entra aqui si la respuesta es correcta
+       //Entra aqui si la respuesta es correcta y le suma un punto
         if (datos.respuestaInt==resultado){
          
         
         i++;
         Puntaje.setText("Puntaje "+ i);
         
-       num1= datos.numeroAleatorio();
-       num2= datos.numeroAleatorio();
+               switch (Dificultades.getSelectedItem().toString()) {
+ 
+        case "Facil":
+        num1= datos.numeroAleatorioFacil();
+        num2= datos.numeroAleatorioFacil();
+        break;
+ 
+        case "Media":
+        num1= datos.numeroAleatorioMedio();
+        num2= datos.numeroAleatorioMedio();
+        break;
+        
+        case "Dificil":
+            num1= datos.numeroAleatorioDificil();
+            num2= datos.numeroAleatorioDificil();
+            break;
+       
+        
+        default:
+      
+        break;
+ 
+ }
          Salida.setText(datos.Operacion(num1, num2));
-         
+         //termina if de la respuesta incorrecta
         }
-        //Si la respuesta es incorrecta entra aqui
+        //Si la respuesta es incorrecta entra aqui y le baja un punto
         else{
             i--;
          Puntaje.setText("Puntaje "+ i);
-       num1= datos.numeroAleatorio();
-       num2= datos.numeroAleatorio();
+         //Switch para elegir dificultades
+               switch (Dificultades.getSelectedItem().toString()) {
+ 
+        case "Facil":
+        num1= datos.numeroAleatorioFacil();
+        num2= datos.numeroAleatorioFacil();
+        break;
+ 
+        case "Media":
+        num1= datos.numeroAleatorioMedio();
+        num2= datos.numeroAleatorioMedio();
+        break;
+        
+        case "Dificil":
+            num1= datos.numeroAleatorioDificil();
+            num2= datos.numeroAleatorioDificil();
+            break;
+       
+        
+        default:
+      
+        break;
+ 
+ }
        Salida.setText(datos.Operacion(num1, num2));
         
         }
@@ -183,12 +246,32 @@ public class ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonResponderActionPerformed
     
     private void ComenzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComenzarActionPerformed
-        boolean acceso = true;
-        if (acceso==true){
-        num1= datos.numeroAleatorio();
-         num2= datos.numeroAleatorio();
-         acceso=false;
-        }
+        //Switch para elegir dificultades
+        switch (Dificultades.getSelectedItem().toString()) {
+ 
+        case "Facil":
+        num1= datos.numeroAleatorioFacil();
+        num2= datos.numeroAleatorioFacil();
+        break;
+ 
+        case "Media":
+        num1= datos.numeroAleatorioMedio();
+        num2= datos.numeroAleatorioMedio();
+        break;
+        
+        case "Dificil":
+            num1= datos.numeroAleatorioDificil();
+            num2= datos.numeroAleatorioDificil();
+            break;
+       
+        
+        default:
+      
+        break;
+ 
+ }
+        
+       
         Salida.setText(datos.Operacion(num1, num2)); System.out.println(datos.respuestaInt+" "+ resultado);
         Entrada.requestFocus();
         
@@ -196,13 +279,29 @@ public class ventana extends javax.swing.JFrame {
          
     }//GEN-LAST:event_ComenzarActionPerformed
 
+    private void DificultadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DificultadesActionPerformed
+      //Si dificultades es cambiado pone el puntaje en 0
+        if(Dificultades.isFocusOwner()){
+        Puntaje.setText("Puntaje "+ 0);
+        //Y si es cambiado mientras esta presionado selecciona dos veces a comenzar para cambiar la tabla que se muestra
+        if (Comenzar.isSelected()){
+        Comenzar.doClick();
+        Comenzar.doClick();
+        }
+        
+        }
+       
+    }//GEN-LAST:event_DificultadesActionPerformed
+
  
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonResponder;
     private javax.swing.JToggleButton Comenzar;
+    private javax.swing.JComboBox<String> Dificultades;
     public static javax.swing.JTextField Entrada;
+    private javax.swing.JLabel EtiquetaDificultad;
     private javax.swing.JLabel Operaciones;
     private javax.swing.JLabel Puntaje;
     private javax.swing.JLabel Salida;

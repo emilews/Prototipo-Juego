@@ -43,7 +43,7 @@ public class Data {
         int random = 0;
         boolean bandera = true;
         while (bandera) {
-            random = (int) (Math.random() * 10);
+            random = (int) (Math.random() * 13);
             if (random != 0) {
                 bandera = false;
             }
@@ -52,6 +52,48 @@ public class Data {
         return random;
     }
 
+    public int numeroAleatorioFacil() {
+        int random = 0;
+        boolean bandera = true;
+        while (bandera) {
+            random = numeroAleatorio();
+            if (random < 4) {
+                bandera = false;
+            }
+
+        }
+
+        return random;
+    }
+
+       public int numeroAleatorioMedio() {
+        int random = 0;
+        boolean bandera = true;
+        while (bandera) {
+            random = numeroAleatorio();
+            if (random >= 4 && random <=7 ) {
+                bandera = false;
+            }
+
+        }
+
+        return random;
+    }
+       
+        public int numeroAleatorioDificil() {
+        int random = 0;
+        boolean bandera = true;
+        while (bandera) {
+            random = numeroAleatorio();
+            if (random >= 7 && random <= 12 ) {
+                bandera = false;
+            }
+
+        }
+
+        return random;
+    }  
+       
     public String Operacion(int num1, int num2) {
         String operacion;
 
